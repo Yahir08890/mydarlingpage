@@ -15,9 +15,33 @@
             background-color: #ddd !important;
             color: #888 !important;
         }
-        /* Estilo para que las letras se deslicen de forma fluida */
         .letras-scroll {
             scroll-behavior: smooth;
+        }
+        /* Estilos para que la lluvia de corazones caiga y se acumule de forma suave */
+        @keyframes inspiracionCaida {
+            0% {
+                transform: translateY(-40px) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh - 40px)) rotate(var(--rotacion-final));
+                opacity: 0;
+            }
+        }
+        .corazon-animado {
+            position: fixed;
+            top: -40px;
+            z-index: 1000;
+            pointer-events: none;
+            will-change: transform, top, opacity;
+            animation: inspiracionCaida 4.5s ease-in-out forwards;
         }
     </style>
 </head>
@@ -702,7 +726,6 @@
                         lineaEl.style.color = "#ff4757"; 
                         lineaEl.style.transform = "scale(1.15)";
                         
-                        // Auto-scroll para seguir la línea activa
                         let posicionTop = lineaEl.offsetTop - contenedorLetras.offsetTop - (contenedorLetras.clientHeight / 2) + (lineaEl.clientHeight / 2);
                         contenedorLetras.scrollTo({
                             top: posicionTop,
@@ -766,30 +789,32 @@
             return minutos + ":" + (segs < 10 ? "0" : "") + segs;
         }
 
-        // Lluvia de corazones mejorada (escalonada, en tandas y con 40 elementos)
+        // Lluvia de corazones mejorada: caen lento, giran random y se acumulan abajo brevemente antes de desaparecer
         function crearLluviaCorazones() {
             for (let i = 0; i < 40; i++) {
                 setTimeout(() => {
                     let corazon = document.createElement('div');
                     corazon.innerHTML = '💗';
-                    corazon.style.position = 'fixed';
-                    corazon.style.left = Math.random() * window.innerWidth + 'px';
-                    corazon.style.top = '-30px';
-                    corazon.style.fontSize = (Math.random() * 20 + 12) + 'px';
-                    corazon.style.zIndex = '1000';
-                    corazon.style.pointerEvents = 'none';
-                    corazon.style.transition = 'transform 3.5s linear, top 3.5s linear';
+                    corazon.className = 'corazon-animado';
+                    
+                    // Posición horizontal aleatoria en la pantalla
+                    corazon.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+                    
+                    // Tamaño variado para que se vea dinámico (de 16px a 30px)
+                    let tamaño = Math.random() * 14 + 16;
+                    corazon.style.fontSize = tamaño + 'px';
+
+                    // Rotación aleatoria lenta (hacia la izquierda o derecha, entre -45 y 45 grados)
+                    let rotacionFinal = (Math.random() * 90 - 45);
+                    corazon.style.setProperty('--rotacion-final', rotacionFinal + 'deg');
+
                     document.body.appendChild(corazon);
 
-                    setTimeout(() => {
-                        corazon.style.top = window.innerHeight + '50px';
-                        corazon.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    }, 50);
-
+                    // Se eliminan automáticamente al terminar la animación
                     setTimeout(() => {
                         corazon.remove();
-                    }, 3600);
-                }, i * 90); // Retraso escalonado para que caigan de a pocos
+                    }, 4600);
+                }, i * 110); // Escalonados de a pocos para que no caigan todos de golpe
             }
         }
     </script>
