@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para ti 💗</title>
+    <title>Para mi princesa 💗</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="logo.png">
     <style>
@@ -21,7 +21,7 @@
 <body>
     
     <div class="contenedor" id="pantalla-inicial">
-        <h1>Hola mi amor 💗</h1>
+        <h1>Holasss mi amor 💗</h1>
         <img src="https://media.giphy.com/media/Zl7u48zLVFgLpRwq6f/giphy.gif" alt="Abrazo" class="gif-portada">
         <p>¿Quieres entrar a tu espacio especial?</p>
         <div class="botones">
@@ -31,11 +31,11 @@
     </div>
 
     <div class="contenedor oculto" id="pantalla-menu">
-        <h2>Nuestro Espacio 💖</h2>
+        <h2>This is for you jskjsk</h2>
         <p>Elige lo que quieres ver hoy:</p>
         
         <div class="menu-botones">
-            <button class="btn-menu" id="ir-cancion">🎵 Canciones <span class="badge-nuevo" id="badge-musica">6</span></button>
+            <button class="btn-menu" id="ir-cancion"> Canciones <span class="badge-nuevo" id="badge-musica">6</span></button>
             <button class="btn-menu" id="ir-fotos">Fotos Juntos <span class="badge-nuevo">Nuevo</span></button>
             <button class="btn-menu" id="ir-poema">Poema o algo asi jsjsjs</button>
             <button class="btn-menu" id="ir-buzon">💌 Buzón de Cartitas <span class="badge-notif" id="badge-buzon">3</span></button>
@@ -47,7 +47,7 @@
         
         <div id="canciones-lista" class="buzon-contenedor">
             <h2>Canciones que me recuerdan a ti 💝</h2>
-            <p>Elige una canción para escucharla jakjak ps que mas sería 😱</p>
+            <p>Elige una canción para escucharla jakjak ps que mas sería jeje😱</p>
             
             <div class="lista-cartas-botones">
                 <button class="btn-carta-item" onclick="abrirCancion('rep-1', 'audio1', letrasCancion1, 'etiqueta-musica-1')">
@@ -63,11 +63,11 @@
                     <span class="etiqueta-leida" id="etiqueta-musica-3">Escuchar</span>
                 </button>
                 <button class="btn-carta-item" onclick="abrirCancion('rep-4', 'audio4', letrasCancion4, 'etiqueta-musica-4')">
-                    <span> Canción 4 - Artista 4</span>
+                    <span> Canción 4 - Ns sigo buscando jsjs😓</span>
                     <span class="etiqueta-leida" id="etiqueta-musica-4">Escuchar</span>
                 </button>
                 <button class="btn-carta-item" onclick="abrirCancion('rep-5', 'audio5', letrasCancion5, 'etiqueta-musica-5')">
-                    <span> Canción 5 - Artista 5</span>
+                    <span> Canción 5 - igual acá perdón 😓</span>
                     <span class="etiqueta-leida" id="etiqueta-musica-5">Escuchar</span>
                 </button>
                 <button class="btn-carta-item" onclick="abrirCancionTraduccion('rep-6', 'audio6', letrasIngles6, letrasEspanol6, 'etiqueta-musica-6')">
@@ -152,8 +152,8 @@
             <h3>I Want to Fall in Love - Checo Mendoza 💗</h3>
             
             <div style="margin: 10px 0; position: relative; display: inline-block;">
-                <button class="btn-control" id="btn-traducir-audio6" onclick="toggleTraduccion('audio6')">🌐 Traducir al Español</button>
-                <span id="aviso-traduccion" style="background: #ff4757; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; margin-left: 8px; display: none;">¡Prueba traducir la letra aquí!</span>
+                <button class="btn-control" id="btn-traducir-audio6" onclick="toggleTraduccion('audio6')">Traducir al Español</button>
+                <span id="aviso-traduccion" style="background: #ff4757; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; margin-left: 8px; display: none;">Creo que si se traduce 😜</span>
             </div>
 
             <div class="controles-audio" style="margin: 15px 0;">
@@ -225,6 +225,10 @@
                     <span>💌 Una cartita extra de ejemplo</span>
                     <span class="etiqueta-leida" id="etiqueta-carta-3">Nueva</span>
                 </button>
+                <button class="btn-carta-item" onclick="abrirCarta('carta4', 'etiqueta-carta-4')">
+                    <span>💌 I want to fall in love</span>
+                    <span class="etiqueta-leida" id="etiqueta-carta-3">Nueva</span>
+                </button>
             </div>
         </div>
 
@@ -250,6 +254,13 @@
             <p><strong>Fecha:</strong> hoy tambien >:p</p>
             <hr style="border: 0; border-top: 1px solid #ffd1dc; margin: 10px 0;">
             <p>esta era de prueba jakajka, peeeero te amo muuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuchisisisisisimos muchos jakjaka 💖</p>
+        </div>
+        <div id="carta4" class="carta-estilo oculto">
+            <button class="btn-volver-buzon" onclick="cerrarCarta()">⬅ Volver al Buzón</button>
+            <h3>Holaaaaas jskajsk </h3>
+            <p><strong>Fecha:</strong> Mañana</p>
+            <hr style="border: 0; border-top: 1px solid #ffd1dc; margin: 10px 0;">
+            <p>Bno no se si ocupe explicaion pero la 6ta cancion la puse por que tal vez asi me sentia antes jakjak cuanto cuando no estabamos conociendo yyy bueno pss antes me daba miedo amar pero al conocerte se que no hay nada mas que quiera que no sea estar contigo jskjskj te amoooo y gracias por todo💗.</p>
         </div>
     </div>
 
@@ -538,6 +549,7 @@
             document.getElementById('carta1').classList.add('oculto');
             document.getElementById('carta2').classList.add('oculto');
             document.getElementById('carta3').classList.add('oculto');
+            document.getElementById('carta4').classList.add('oculto');
             document.getElementById(idCarta).classList.remove('oculto');
 
             let numeroCarta = etiquetaId.replace('etiqueta-carta-', '');
@@ -548,6 +560,7 @@
             document.getElementById('carta1').classList.add('oculto');
             document.getElementById('carta2').classList.add('oculto');
             document.getElementById('carta3').classList.add('oculto');
+            document.getElementById('carta4').classList.add('oculto');
             document.getElementById('buzon-lista').classList.remove('oculto');
         }
 
@@ -592,7 +605,7 @@
             letraActualEnUso = arrayLetrasIngles;
 
             let btnTrad = document.getElementById('btn-traducir-' + idAudio);
-            if(btnTrad) btnTrad.textContent = "🌐 Traducir al Español";
+            if(btnTrad) btnTrad.textContent = " Traducir al Español";
 
             let aviso = document.getElementById('aviso-traduccion');
             if(aviso) {
@@ -640,10 +653,10 @@
             
             if (estaTraducido) {
                 letraActualEnUso = window.letrasActualesEspanol;
-                btnTrad.textContent = "🇺🇸 Ver en Inglés Original";
+                btnTrad.textContent = "Ver en Inglés";
             } else {
                 letraActualEnUso = window.letrasActualesIngles;
-                btnTrad.textContent = "🌐 Traducir al Español";
+                btnTrad.textContent = "Traducir al Español";
             }
             renderizarLetras(idAudio, letraActualEnUso);
         }
