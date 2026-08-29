@@ -20,7 +20,6 @@
 </head>
 <body>
     
-    <!-- PANTALLA INICIAL -->
     <div class="contenedor" id="pantalla-inicial">
         <h1>Hola mi amor 💗</h1>
         <img src="https://media.giphy.com/media/Zl7u48zLVFgLpRwq6f/giphy.gif" alt="Abrazo" class="gif-portada">
@@ -31,24 +30,21 @@
         </div>
     </div>
 
-    <!-- MENÚ PRINCIPAL -->
     <div class="contenedor oculto" id="pantalla-menu">
         <h2>Nuestro Espacio 💖</h2>
         <p>Elige lo que quieres ver hoy:</p>
         
         <div class="menu-botones">
-            <button class="btn-menu" id="ir-cancion">🎵 Canciones <span class="badge-nuevo" id="badge-musica">5</span></button>
+            <button class="btn-menu" id="ir-cancion">🎵 Canciones <span class="badge-nuevo" id="badge-musica">6</span></button>
             <button class="btn-menu" id="ir-fotos">Fotos Juntos <span class="badge-nuevo">Nuevo</span></button>
             <button class="btn-menu" id="ir-poema">Poema o algo asi jsjsjs</button>
             <button class="btn-menu" id="ir-buzon">💌 Buzón de Cartitas <span class="badge-notif" id="badge-buzon">3</span></button>
         </div>
     </div>
 
-    <!-- SECCIÓN 1: MENÚ DE CANCIONES (5 Ejemplos Sincronizados) -->
     <div class="contenedor-seccion oculto" id="seccion-cancion">
         <button class="btn-volver" id="volver-menu-1">⬅ Volver al Menú</button>
         
-        <!-- Listado principal de canciones -->
         <div id="canciones-lista" class="buzon-contenedor">
             <h2>Canciones que me recuerdan a ti 💝</h2>
             <p>Elige una canción para escucharla jakjak ps que mas sería 😱</p>
@@ -74,10 +70,13 @@
                     <span>🎵 Canción 5 - Artista 5</span>
                     <span class="etiqueta-leida" id="etiqueta-musica-5">Escuchar</span>
                 </button>
+                <button class="btn-carta-item" onclick="abrirCancionTraduccion('rep-6', 'audio6', letrasIngles6, letrasEspanol6, 'etiqueta-musica-6')">
+                    <span>🎵 I Want to Fall in Love - Checo Mendoza</span>
+                    <span class="etiqueta-leida" id="etiqueta-musica-6">Escuchar</span>
+                </button>
             </div>
         </div>
 
-        <!-- REPRODUCTOR 1 -->
         <div id="rep-1" class="carta-estilo oculto">
             <button class="btn-volver-buzon" onclick="cerrarCancion('audio1')">⬅ Volver a la Lista</button>
             <h3>Nos pertenecemos - DannyLux 💗</h3>
@@ -92,7 +91,6 @@
             <div class="letras-scroll" id="letras-scroll-audio1" style="max-height: 230px; overflow-y: auto;"></div>
         </div>
 
-        <!-- REPRODUCTOR 2 -->
         <div id="rep-2" class="carta-estilo oculto">
             <button class="btn-volver-buzon" onclick="cerrarCancion('audio2')">⬅ Volver a la Lista</button>
             <h3>Beso - Josean Log 💗</h3>
@@ -107,7 +105,6 @@
             <div class="letras-scroll" id="letras-scroll-audio2" style="max-height: 230px; overflow-y: auto;"></div>
         </div>
 
-        <!-- REPRODUCTOR 3 -->
         <div id="rep-3" class="carta-estilo oculto">
             <button class="btn-volver-buzon" onclick="cerrarCancion('audio3')">⬅ Volver a la Lista</button>
             <h3>MMXX´s - Virlán García 💗</h3>
@@ -122,7 +119,6 @@
             <div class="letras-scroll" id="letras-scroll-audio3" style="max-height: 230px; overflow-y: auto;"></div>
         </div>
 
-        <!-- REPRODUCTOR 4 -->
         <div id="rep-4" class="carta-estilo oculto">
             <button class="btn-volver-buzon" onclick="cerrarCancion('audio4')">⬅ Volver a la Lista</button>
             <h3>Canción 4 - Artista 4 💗</h3>
@@ -137,7 +133,6 @@
             <div class="letras-scroll" id="letras-scroll-audio4" style="max-height: 230px; overflow-y: auto;"></div>
         </div>
 
-        <!-- REPRODUCTOR 5 -->
         <div id="rep-5" class="carta-estilo oculto">
             <button class="btn-volver-buzon" onclick="cerrarCancion('audio5')">⬅ Volver a la Lista</button>
             <h3>Canción 5 - Artista 5 💗</h3>
@@ -151,9 +146,28 @@
             </div>
             <div class="letras-scroll" id="letras-scroll-audio5" style="max-height: 230px; overflow-y: auto;"></div>
         </div>
+
+        <div id="rep-6" class="carta-estilo oculto">
+            <button class="btn-volver-buzon" onclick="cerrarCancion('audio6')">⬅ Volver a la Lista</button>
+            <h3>I Want to Fall in Love - Checo Mendoza 💗</h3>
+            
+            <div style="margin: 10px 0; position: relative; display: inline-block;">
+                <button class="btn-control" id="btn-traducir-audio6" onclick="toggleTraduccion('audio6')">🌐 Traducir al Español</button>
+                <span id="aviso-traduccion" style="background: #ff4757; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; margin-left: 8px; display: none;">¡Prueba traducir la letra aquí!</span>
+            </div>
+
+            <div class="controles-audio" style="margin: 15px 0;">
+                <button class="btn-control" onclick="retroceder('audio6')">⏪ -5s</button>
+                <button class="btn-control" onclick="togglePlay('audio6', this)">▶ Play</button>
+                <button class="btn-control" onclick="adelantar('audio6')">+5s ⏩</button>
+            </div>
+            <div class="tiempo-info" style="margin-bottom: 15px;">
+                <span id="tiempo-actual-audio6">0:00</span> / <span id="duracion-audio6">0:00</span>
+            </div>
+            <div class="letras-scroll" id="letras-scroll-audio6" style="max-height: 230px; overflow-y: auto;"></div>
+        </div>
     </div>
 
-    <!-- SECCIÓN 2: FOTOS JUNTOS -->
     <div class="contenedor-seccion oculto" id="seccion-fotos">
         <button class="btn-volver" id="volver-menu-2">⬅ Volver al Menú</button>
         <h2>Nos hacen falta fotos juntoooos 😣</h2>
@@ -178,7 +192,6 @@
         </div>
     </div>
 
-    <!-- SECCIÓN 3: POEMA -->
     <div class="contenedor-seccion oculto" id="seccion-poema">
         <button class="btn-volver" id="volver-menu-3">⬅ Volver al Menú</button>
         <div class="carta-estilo">
@@ -192,7 +205,6 @@
         </div>
     </div>
 
-    <!-- SECCIÓN 4: BUZÓN INTERACTIVO -->
     <div class="contenedor-seccion oculto" id="seccion-buzon">
         <button class="btn-volver" id="volver-menu-4">⬅ Volver al Menú</button>
         
@@ -241,14 +253,13 @@
         </div>
     </div>
 
-    <!-- Audios independientes -->
     <audio id="audio1" src="DannyLux - Nos Pertenecemos [Lyric Video].mp3"></audio>
     <audio id="audio2" src="Jósean Log - Beso (Lyric Video).mp3"></audio>
     <audio id="audio3" src="Virlán García - MMXX's [Official Video].mp3"></audio>
     <audio id="audio4" src="cancion4.mp3"></audio>
     <audio id="audio5" src="cancion5.mp3"></audio>
+    <audio id="audio6" src="Checo Mendoza - I Want to Fall in Love.mp3"></audio>
 
-    <!-- CÓDIGO JAVASCRIPT -->
     <script>
         const letrasCancion1 = [
             { tiempo: 0, texto: "🎶" },
@@ -308,6 +319,7 @@
             { tiempo: 180, texto: "Hay que empezar por acercarse, bésame" },
             { tiempo: 196, texto: "(Bésame)" },
         ];
+
         const letrasCancion3 = [
             { tiempo: 0, texto: "🎶 (Música) 🎶" },
             { tiempo: 20, texto: "Quiero despertar a diario" },
@@ -353,13 +365,27 @@
             { tiempo: 160, texto: "Desde enero hasta diciembre" },
             { tiempo: 163, texto: "Recordar los 2020s algún día." },
         ];
+
         const letrasCancion4 = [{ tiempo: 0, texto: "🎶" }, { tiempo: 10, texto: "Letra de la canción 4..." }];
         const letrasCancion5 = [{ tiempo: 0, texto: "🎶" }, { tiempo: 10, texto: "Letra de la canción 5..." }];
+
+        // Letras en Inglés y Español para Checo Mendoza (Canción 6)
+        const letrasIngles6 = [
+            { tiempo: 0, texto: "🎶" },
+            { tiempo: 10, texto: "I want to fall in love..." },
+            { tiempo: 20, texto: "And give you all my heart..." }
+        ];
+
+        const letrasEspanol6 = [
+            { tiempo: 0, texto: "🎶" },
+            { tiempo: 10, texto: "Quiero enamorarme..." },
+            { tiempo: 20, texto: "Y entregarte todo mi corazón..." }
+        ];
 
         // Comprobación inicial de elementos leídos en localStorage al cargar la página
         document.addEventListener("DOMContentLoaded", () => {
             verificarLeidos('carta', 3, 'badge-buzon');
-            verificarLeidos('musica', 5, 'badge-musica');
+            verificarLeidos('musica', 6, 'badge-musica');
         });
 
         function marcarComoLeido(idUnico, badgeId, totalElementos) {
@@ -419,7 +445,7 @@
                 seccionBuzon.classList.add('oculto');
                 pantallaMenu.classList.remove('oculto');
                 
-                for (let i = 1; i <= 5; i++) {
+                for (let i = 1; i <= 6; i++) {
                     let aud = document.getElementById('audio' + i);
                     if(aud) aud.pause();
                 }
@@ -473,7 +499,6 @@
             document.getElementById('carta3').classList.add('oculto');
             document.getElementById(idCarta).classList.remove('oculto');
 
-            // Marcar carta individual como leída en localStorage
             let numeroCarta = etiquetaId.replace('etiqueta-carta-', '');
             marcarComoLeido(`carta-${numeroCarta}`, 'badge-buzon', 3);
         }
@@ -485,25 +510,16 @@
             document.getElementById('buzon-lista').classList.remove('oculto');
         }
 
+        // Función original para las canciones normales (1 a 5)
         function abrirCancion(idRep, idAudio, arrayLetras, etiquetaId) {
             document.getElementById('canciones-lista').classList.add('oculto');
             cerrarCancionAll();
             document.getElementById(idRep).classList.remove('oculto');
 
-            // Marcar canción individual como vista en localStorage
             let numeroMusica = etiquetaId.replace('etiqueta-musica-', '');
-            marcarComoLeido(`musica-${numeroMusica}`, 'badge-musica', 5);
+            marcarComoLeido(`musica-${numeroMusica}`, 'badge-musica', 6);
 
-            let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
-            contenedorLetras.innerHTML = ""; 
-
-            arrayLetras.forEach((linea, index) => {
-                let p = document.createElement('p');
-                p.classList.add('linea-letra');
-                p.id = 'linea-' + idAudio + '-' + index;
-                p.innerText = linea.texto;
-                contenedorLetras.appendChild(p);
-            });
+            renderizarLetras(idAudio, arrayLetras);
 
             let aud = document.getElementById(idAudio);
             aud.ontimeupdate = function() {
@@ -518,6 +534,77 @@
                     }
                 }
             };
+        }
+
+        // Variables y función especial para abrir la canción 6 con soporte de traducción
+        let estaTraducido = false;
+        let letraActualEnUso = null;
+
+        function abrirCancionTraduccion(idRep, idAudio, arrayLetrasIngles, arrayLetrasEspanol, etiquetaId) {
+            document.getElementById('canciones-lista').classList.add('oculto');
+            cerrarCancionAll();
+            document.getElementById(idRep).classList.remove('oculto');
+
+            window.letrasActualesIngles = arrayLetrasIngles;
+            window.letrasActualesEspanol = arrayLetrasEspanol;
+            estaTraducido = false;
+            letraActualEnUso = arrayLetrasIngles;
+
+            let btnTrad = document.getElementById('btn-traducir-' + idAudio);
+            if(btnTrad) btnTrad.textContent = "🌐 Traducir al Español";
+
+            let aviso = document.getElementById('aviso-traduccion');
+            if(aviso) {
+                aviso.style.display = 'inline-block';
+                setTimeout(() => {
+                    aviso.style.display = 'none';
+                }, 10000); // Se oculta a los 10 segundos
+            }
+
+            let numeroMusica = etiquetaId.replace('etiqueta-musica-', '');
+            marcarComoLeido(`musica-${numeroMusica}`, 'badge-musica', 6);
+
+            renderizarLetras(idAudio, letraActualEnUso);
+
+            let aud = document.getElementById(idAudio);
+            aud.ontimeupdate = function() {
+                let tiempoActual = aud.currentTime;
+                for (let i = 0; i < letraActualEnUso.length; i++) {
+                    let tiempoLinea = letraActualEnUso[i].tiempo;
+                    let tiempoSiguiente = (i < letraActualEnUso.length - 1) ? letraActualEnUso[i+1].tiempo : 99999;
+
+                    if (tiempoActual >= tiempoLinea && tiempoActual < tiempoSiguiente) {
+                        resaltarLinea(idAudio, i);
+                        break;
+                    }
+                }
+            };
+        }
+
+        function renderizarLetras(idAudio, arrayLetras) {
+            let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
+            contenedorLetras.innerHTML = ""; 
+            arrayLetras.forEach((linea, index) => {
+                let p = document.createElement('p');
+                p.classList.add('linea-letra');
+                p.id = 'linea-' + idAudio + '-' + index;
+                p.innerText = linea.texto;
+                contenedorLetras.appendChild(p);
+            });
+        }
+
+        function toggleTraduccion(idAudio) {
+            estaTraducido = !estaTraducido;
+            let btnTrad = document.getElementById('btn-traducir-' + idAudio);
+            
+            if (estaTraducido) {
+                letraActualEnUso = window.letrasActualesEspanol;
+                btnTrad.textContent = "🇺🇸 Ver en Inglés Original";
+            } else {
+                letraActualEnUso = window.letrasActualesIngles;
+                btnTrad.textContent = "🌐 Traducir al Español";
+            }
+            renderizarLetras(idAudio, letraActualEnUso);
         }
 
         function resaltarLinea(idAudio, index) {
@@ -536,7 +623,7 @@
         }
 
         function cerrarCancionAll() {
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 6; i++) {
                 document.getElementById('rep-' + i).classList.add('oculto');
                 let aud = document.getElementById('audio' + i);
                 if(aud) {
@@ -574,7 +661,7 @@
             aud.currentTime = Math.max(0, aud.currentTime - 5);
         }
 
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 6; i++) {
             let aud = document.getElementById('audio' + i);
             let tAct = document.getElementById('tiempo-actual-audio' + i);
             let tTot = document.getElementById('duracion-audio' + i);
