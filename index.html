@@ -152,7 +152,7 @@
             <h3>I Want to Fall in Love - Checo Mendoza 💗</h3>
             
             <div style="margin: 10px 0; position: relative; display: inline-block;">
-                <button class="btn-control" id="btn-traducir-audio6" onclick="toggleTraduccion('audio6')">Traducir al Español</button>
+                <button class="btn-control" id="btn-traducir-audio6" onclick="toggleTraduccion('audio6')">Mostrar Traducción</button>
                 <span id="aviso-traduccion" style="background: #ff4757; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; margin-left: 8px; display: none;">Creo que si se traduce 😜</span>
             </div>
 
@@ -227,7 +227,7 @@
                 </button>
                 <button class="btn-carta-item" onclick="abrirCarta('carta4', 'etiqueta-carta-4')">
                     <span>💌 I want to fall in love</span>
-                    <span class="etiqueta-leida" id="etiqueta-carta-3">Nueva</span>
+                    <span class="etiqueta-leida" id="etiqueta-carta-4">Nueva</span>
                 </button>
             </div>
         </div>
@@ -405,7 +405,6 @@
             { tiempo: 87, texto: "But I´m afraid falling in love again" },
             { tiempo: 89, texto: "I want to fall with you" },
             { tiempo: 91, texto: "Coz are you" },
-            
         ];
 
         const letrasEspanol6 = [
@@ -433,6 +432,9 @@
             { tiempo: 89, texto: "Quiero enamorarme contigo" },
             { tiempo: 91, texto: "por que eres tu" },
         ];
+
+        // Estado global para la traducción de la canción 6
+        let traduccionActiva = false;
 
         // Comprobación inicial de elementos leídos en localStorage al cargar la página
         document.addEventListener("DOMContentLoaded", () => {
@@ -469,7 +471,7 @@
                     badge.textContent = pendientes;
                     badge.style.display = 'inline-block';
                 } else {
-                    badge.style.display = 'none'; // Se oculta si ya vio todo
+                    badge.style.display = 'none';
                 }
             }
         }
@@ -564,7 +566,7 @@
             document.getElementById('buzon-lista').classList.remove('oculto');
         }
 
-        // Función original para las canciones normales (1 a 5)
+        // Función para las canciones normales (1 a 5)
         function abrirCancion(idRep, idAudio, arrayLetras, etiquetaId) {
             document.getElementById('canciones-lista').classList.add('oculto');
             cerrarCancionAll();
@@ -574,9 +576,113 @@
             marcarComoLeido(`musica-${numeroMusica}`, 'badge-musica', 6);
 
             renderizarLetras(idAudio, arrayLetras);
+            iniciarReproductor(idAudio, arrayLetras);
+        }
 
+        // Función específica para abrir la canción 6 con traducción opcional dual
+        function abrirCancionTraduccion(idRep, idAudio, letrasIngles, letrasEspanol, etiquetaId) {
+            document.getElementById('canciones-lista').classList.add('oculto');
+            cerrarCancionAll();
+            document.getElementById(idRep).classList.remove('oculto');
+
+            let numeroMusica = etiquetaId.replace('etiqueta-musica-', '');
+            marcarComoLeido(`musica-${numeroMusica}`, 'badge-musica', 6);
+
+            traduccionActiva = false;
+            document.getElementById('btn-traducir-audio6').textContent = "Mostrar Traducción";
+            
+            renderizarLetrasDualTraduccion(idAudio, letrasIngles, letrasEspanol, traduccionActiva);
+            iniciarReproductor(idAudio, letrasIngles);
+        }
+
+        // Función de toggle para el botón de traducción de la canción 6
+        function toggleTraduccion(idAudio) {
+            traduccionActiva = !traduccionActiva;
+            let btn = document.getElementById('btn-traducir-audio6');
+            let aviso = document.getElementById('aviso-traduccion');
+
+            if (traduccionActiva) {
+                btn.textContent = "Ocultar Traducción";
+                aviso.style.display = "inline-block";
+            } else {
+                btn.textContent = "Mostrar Traducción";
+                aviso.style.display = "none";
+            }
+
+            renderizarLetrasDualTraduccion(idAudio, letrasIngles6, letrasEspanol6, traduccionActiva);
+            
+            // Mantener sincronizado el renglón resaltado actual
             let aud = document.getElementById(idAudio);
+            let tiempoActual = aud.currentTime;
+            for (let i = 0; i < letrasIngles6.length; i++) {
+                let tiempoLinea = letrasIngles6[i].tiempo;
+                let tiempoSiguiente = (i < letrasIngles6.length - 1) ? letrasIngles6[i+1].tiempo : 99999;
+                if (tiempoActual >= tiempoLinea && tiempoActual < tiempoSiguiente) {
+                    resaltarLinea(idAudio, i);
+                    break;
+                }
+            }
+        }
+
+        // Renderizado normal para canciones 1 a 5
+        function renderizarLetras(idAudio, arrayLetras) {
+            let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
+            contenedorLetras.innerHTML = ""; 
+            arrayLetras.forEach((linea, index) => {
+                let p = document.createElement('p');
+                p.classList.add('linea-letra');
+                p.id = 'linea-' + idAudio + '-' + index;
+                p.textContent = linea.texto;
+                p.style.transition = "all 0.3s ease";
+                contenedorLetras.appendChild(p);
+            });
+        }
+
+        // Renderizado dual para canción 6 (Inglés arriba + Español opcional abajo)
+        function renderizarLetrasDualTraduccion(idAudio, letrasIngles, letrasEspanol, mostrarEs) {
+            let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
+            contenedorLetras.innerHTML = ""; 
+            letrasIngles.forEach((linea, index) => {
+                let div = document.createElement('div');
+                div.classList.add('linea-letra');
+                div.id = 'linea-' + idAudio + '-' + index;
+                div.style.marginBottom = "12px";
+                div.style.transition = "all 0.3s ease";
+
+                // Texto principal en Inglés
+                let pIngles = document.createElement('div');
+                pIngles.style.fontSize = "15px";
+                pIngles.style.fontWeight = "bold";
+                pIngles.innerText = linea.texto;
+
+                div.appendChild(pIngles);
+
+                // Texto secundario en Español (si está activado)
+                if (mostrarEs && letrasEspanol[index]) {
+                    let pEspanol = document.createElement('div');
+                    pEspanol.style.fontSize = "12px";
+                    pEspanol.style.color = "#777";
+                    pEspanol.style.marginTop = "2px";
+                    pEspanol.innerText = letrasEspanol[index].texto;
+                    div.appendChild(pEspanol);
+                }
+
+                contenedorLetras.appendChild(div);
+            });
+        }
+
+        function iniciarReproductor(idAudio, arrayLetras) {
+            let aud = document.getElementById(idAudio);
+            let tiempoActualSpan = document.getElementById('tiempo-actual-' + idAudio);
+            let duracionSpan = document.getElementById('duracion-' + idAudio);
+
+            aud.onloadedmetadata = function() {
+                duracionSpan.textContent = formatearTiempo(aud.duration);
+            };
+
             aud.ontimeupdate = function() {
+                tiempoActualSpan.textContent = formatearTiempo(aud.currentTime);
+                
                 let tiempoActual = aud.currentTime;
                 for (let i = 0; i < arrayLetras.length; i++) {
                     let tiempoLinea = arrayLetras[i].tiempo;
@@ -590,124 +696,33 @@
             };
         }
 
-        // Variables y función especial para abrir la canción 6 con soporte de traducción
-        let estaTraducido = false;
-        let letraActualEnUso = null;
+        function resaltarLinea(idAudio, indexActivo) {
+            let audNum = idAudio.replace('audio', '');
+            let totalLineas = (audNum === '6') ? letrasIngles6.length : eval('letrasCancion' + audNum).length;
 
-        function abrirCancionTraduccion(idRep, idAudio, arrayLetrasIngles, arrayLetrasEspanol, etiquetaId) {
-            document.getElementById('canciones-lista').classList.add('oculto');
-            cerrarCancionAll();
-            document.getElementById(idRep).classList.remove('oculto');
-
-            window.letrasActualesIngles = arrayLetrasIngles;
-            window.letrasActualesEspanol = arrayLetrasEspanol;
-            estaTraducido = false;
-            letraActualEnUso = arrayLetrasIngles;
-
-            let btnTrad = document.getElementById('btn-traducir-' + idAudio);
-            if(btnTrad) btnTrad.textContent = " Traducir al Español";
-
-            let aviso = document.getElementById('aviso-traduccion');
-            if(aviso) {
-                aviso.style.display = 'inline-block';
-                setTimeout(() => {
-                    aviso.style.display = 'none';
-                }, 10000); // Se oculta a los 10 segundos
-            }
-
-            let numeroMusica = etiquetaId.replace('etiqueta-musica-', '');
-            marcarComoLeido(`musica-${numeroMusica}`, 'badge-musica', 6);
-
-            renderizarLetras(idAudio, letraActualEnUso);
-
-            let aud = document.getElementById(idAudio);
-            aud.ontimeupdate = function() {
-                let tiempoActual = aud.currentTime;
-                for (let i = 0; i < letraActualEnUso.length; i++) {
-                    let tiempoLinea = letraActualEnUso[i].tiempo;
-                    let tiempoSiguiente = (i < letraActualEnUso.length - 1) ? letraActualEnUso[i+1].tiempo : 99999;
-
-                    if (tiempoActual >= tiempoLinea && tiempoActual < tiempoSiguiente) {
-                        resaltarLinea(idAudio, i);
-                        break;
+            for (let i = 0; i < totalLineas; i++) {
+                let lineaEl = document.getElementById('linea-' + idAudio + '-' + i);
+                if (lineaEl) {
+                    if (i === indexActivo) {
+                        lineaEl.style.color = "#ff4757"; // Color activo
+                        lineaEl.style.transform = "scale(1.05)";
+                    } else {
+                        lineaEl.style.color = (idAudio === 'audio6' && traduccionActiva) ? "#333" : "#555";
+                        lineaEl.style.transform = "scale(1)";
                     }
                 }
-            };
-        }
-
-        function renderizarLetras(idAudio, arrayLetras) {
-            let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
-            contenedorLetras.innerHTML = ""; 
-            arrayLetras.forEach((linea, index) => {
-                let p = document.createElement('p');
-                p.classList.add('linea-letra');
-                p.id = 'linea-' + idAudio + '-' + index;
-                p.innerText = linea.texto;
-                contenedorLetras.appendChild(p);
-            });
-        }
-
-        function toggleTraduccion(idAudio) {
-            estaTraducido = !estaTraducido;
-            let btnTrad = document.getElementById('btn-traducir-' + idAudio);
-            
-            if (estaTraducido) {
-                letraActualEnUso = window.letrasActualesEspanol;
-                btnTrad.textContent = "Ver en Inglés";
-            } else {
-                letraActualEnUso = window.letrasActualesIngles;
-                btnTrad.textContent = "Traducir al Español";
-            }
-            renderizarLetras(idAudio, letraActualEnUso);
-        }
-
-        function resaltarLinea(idAudio, index) {
-            let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
-            contenedorLetras.querySelectorAll('.linea-letra').forEach(el => el.classList.remove('activa'));
-            
-            let lineaActiva = document.getElementById('linea-' + idAudio + '-' + index);
-            if (lineaActiva && contenedorLetras) {
-                lineaActiva.classList.add('activa');
-                let topPos = lineaActiva.offsetTop - contenedorLetras.offsetTop - (contenedorLetras.clientHeight / 2) + (lineaActiva.clientHeight / 2);
-                contenedorLetras.scrollTo({
-                    top: topPos,
-                    behavior: 'smooth'
-                });
             }
         }
 
-        function cerrarCancionAll() {
-            for (let i = 1; i <= 6; i++) {
-                document.getElementById('rep-' + i).classList.add('oculto');
-                let aud = document.getElementById('audio' + i);
-                if(aud) {
-                    aud.pause();
-                    aud.ontimeupdate = null;
-                }
-            }
-            document.getElementById('canciones-lista').classList.remove('oculto');
-        }
-
-        function cerrarCancion(idAudio) {
-            let aud = document.getElementById(idAudio);
-            if(aud) aud.pause();
-            cerrarCancionAll();
-        }
-
-        function togglePlay(idAudio, btnElement) {
+        function togglePlay(idAudio, boton) {
             let aud = document.getElementById(idAudio);
             if (aud.paused) {
                 aud.play();
-                btnElement.textContent = "⏸ Pausa";
+                boton.textContent = "⏸ Pausa";
             } else {
                 aud.pause();
-                btnElement.textContent = "▶ Play";
+                boton.textContent = "▶ Play";
             }
-        }
-
-        function adelantar(idAudio) {
-            let aud = document.getElementById(idAudio);
-            aud.currentTime = Math.min(aud.duration, aud.currentTime + 5);
         }
 
         function retroceder(idAudio) {
@@ -715,38 +730,60 @@
             aud.currentTime = Math.max(0, aud.currentTime - 5);
         }
 
-        for (let i = 1; i <= 6; i++) {
-            let aud = document.getElementById('audio' + i);
-            let tAct = document.getElementById('tiempo-actual-audio' + i);
-            let tTot = document.getElementById('duracion-audio' + i);
+        function adelantar(idAudio) {
+            let aud = document.getElementById(idAudio);
+            aud.currentTime = Math.min(aud.duration, aud.currentTime + 5);
+        }
 
-            if (aud) {
-                aud.addEventListener('loadedmetadata', () => {
-                    if(tTot) tTot.textContent = formatearTiempo(aud.duration);
-                });
-                aud.addEventListener('timeupdate', () => {
-                    if(tAct) tAct.textContent = formatearTiempo(aud.currentTime);
-                });
+        function cerrarCancion(idAudio) {
+            let aud = document.getElementById(idAudio);
+            if(aud) {
+                aud.pause();
+                aud.currentTime = 0;
+            }
+            cerrarCancionAll();
+            document.getElementById('canciones-lista').classList.remove('oculto');
+        }
+
+        function cerrarCancionAll() {
+            for (let i = 1; i <= 6; i++) {
+                let rep = document.getElementById('rep-' + i);
+                if(rep) rep.classList.add('oculto');
+                
+                let aud = document.getElementById('audio' + i);
+                if(aud) {
+                    aud.pause();
+                    aud.currentTime = 0;
+                }
             }
         }
 
         function formatearTiempo(segundos) {
-            let mins = Math.floor(segundos / 60);
-            let secs = Math.floor(segundos % 60);
-            return mins + ":" + (secs < 10 ? "0" : "") + secs;
+            let minutos = Math.floor(segundos / 60);
+            let segs = Math.floor(segundos % 60);
+            return minutos + ":" + (segs < 10 ? "0" : "") + segs;
         }
 
         function crearLluviaCorazones() {
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 20; i++) {
+                let corazon = document.createElement('div');
+                corazon.innerHTML = '💗';
+                corazon.style.position = 'fixed';
+                corazon.style.left = Math.random() * window.innerWidth + 'px';
+                corazon.style.top = '-20px';
+                corazon.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                corazon.style.zIndex = '1000';
+                corazon.style.transition = 'transform 3s linear, top 3s linear';
+                document.body.appendChild(corazon);
+
                 setTimeout(() => {
-                    const corazon = document.createElement('div');
-                    corazon.classList.add('corazon');
-                    corazon.innerHTML = '💗';
-                    corazon.style.left = Math.random() * 100 + 'vw';
-                    corazon.style.animationDuration = Math.random() * 3 + 2 + 's';
-                    document.body.appendChild(corazon);
-                    setTimeout(() => corazon.remove(), 5000); 
-                }, i * 100);
+                    corazon.style.top = window.innerHeight + 'px';
+                    corazon.style.transform = `rotate(${Math.random() * 360}deg)`;
+                }, 100);
+
+                setTimeout(() => {
+                    corazon.remove();
+                }, 3000);
             }
         }
     </script>
