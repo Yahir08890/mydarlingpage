@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="logo.png">
     <style>
-        /* Estilos rápidos para colores legibles del tiempo y etiquetas leídas */
         .tiempo-info {
             color: #555;
             font-weight: 500;
@@ -15,6 +14,10 @@
         .etiqueta-leida.vista {
             background-color: #ddd !important;
             color: #888 !important;
+        }
+        /* Estilo para que las letras se deslicen de forma fluida */
+        .letras-scroll {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -380,7 +383,6 @@
         const letrasCancion4 = [{ tiempo: 0, texto: "🎶" }, { tiempo: 10, texto: "Letra de la canción 4..." }];
         const letrasCancion5 = [{ tiempo: 0, texto: "🎶" }, { tiempo: 10, texto: "Letra de la canción 5..." }];
 
-        // Letras en Inglés y Español para Checo Mendoza (Canción 6)
         const letrasIngles6 = [
             { tiempo: 0, texto: "🎶" },
             { tiempo: 13, texto: "I want to fall in love (again) " },
@@ -433,10 +435,8 @@
             { tiempo: 91, texto: "por que eres tu" },
         ];
 
-        // Estado global para la traducción de la canción 6
         let traduccionActiva = false;
 
-        // Comprobación inicial de elementos leídos en localStorage al cargar la página
         document.addEventListener("DOMContentLoaded", () => {
             verificarLeidos('carta', 4, 'badge-buzon');
             verificarLeidos('musica', 6, 'badge-musica');
@@ -566,7 +566,6 @@
             document.getElementById('buzon-lista').classList.remove('oculto');
         }
 
-        // Función para las canciones normales (1 a 5)
         function abrirCancion(idRep, idAudio, arrayLetras, etiquetaId) {
             document.getElementById('canciones-lista').classList.add('oculto');
             cerrarCancionAll();
@@ -579,7 +578,6 @@
             iniciarReproductor(idAudio, arrayLetras);
         }
 
-        // Función específica para abrir la canción 6 con traducción opcional dual
         function abrirCancionTraduccion(idRep, idAudio, letrasIngles, letrasEspanol, etiquetaId) {
             document.getElementById('canciones-lista').classList.add('oculto');
             cerrarCancionAll();
@@ -595,7 +593,6 @@
             iniciarReproductor(idAudio, letrasIngles);
         }
 
-        // Función de toggle para el botón de traducción de la canción 6
         function toggleTraduccion(idAudio) {
             traduccionActiva = !traduccionActiva;
             let btn = document.getElementById('btn-traducir-audio6');
@@ -611,7 +608,6 @@
 
             renderizarLetrasDualTraduccion(idAudio, letrasIngles6, letrasEspanol6, traduccionActiva);
             
-            // Mantener sincronizado el renglón resaltado actual
             let aud = document.getElementById(idAudio);
             let tiempoActual = aud.currentTime;
             for (let i = 0; i < letrasIngles6.length; i++) {
@@ -624,7 +620,6 @@
             }
         }
 
-        // Renderizado normal para canciones 1 a 5
         function renderizarLetras(idAudio, arrayLetras) {
             let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
             contenedorLetras.innerHTML = ""; 
@@ -633,12 +628,12 @@
                 p.classList.add('linea-letra');
                 p.id = 'linea-' + idAudio + '-' + index;
                 p.textContent = linea.texto;
+                p.style.fontSize = "16px";
                 p.style.transition = "all 0.3s ease";
                 contenedorLetras.appendChild(p);
             });
         }
 
-        // Renderizado dual para canción 6 (Inglés arriba + Español opcional abajo)
         function renderizarLetrasDualTraduccion(idAudio, letrasIngles, letrasEspanol, mostrarEs) {
             let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
             contenedorLetras.innerHTML = ""; 
@@ -646,23 +641,21 @@
                 let div = document.createElement('div');
                 div.classList.add('linea-letra');
                 div.id = 'linea-' + idAudio + '-' + index;
-                div.style.marginBottom = "12px";
+                div.style.marginBottom = "14px";
                 div.style.transition = "all 0.3s ease";
 
-                // Texto principal en Inglés
                 let pIngles = document.createElement('div');
-                pIngles.style.fontSize = "15px";
+                pIngles.style.fontSize = "16px";
                 pIngles.style.fontWeight = "bold";
                 pIngles.innerText = linea.texto;
 
                 div.appendChild(pIngles);
 
-                // Texto secundario en Español (si está activado)
                 if (mostrarEs && letrasEspanol[index]) {
                     let pEspanol = document.createElement('div');
-                    pEspanol.style.fontSize = "12px";
+                    pEspanol.style.fontSize = "13px";
                     pEspanol.style.color = "#777";
-                    pEspanol.style.marginTop = "2px";
+                    pEspanol.style.marginTop = "3px";
                     pEspanol.innerText = letrasEspanol[index].texto;
                     div.appendChild(pEspanol);
                 }
@@ -700,12 +693,21 @@
             let audNum = idAudio.replace('audio', '');
             let totalLineas = (audNum === '6') ? letrasIngles6.length : eval('letrasCancion' + audNum).length;
 
+            let contenedorLetras = document.getElementById('letras-scroll-' + idAudio);
+
             for (let i = 0; i < totalLineas; i++) {
                 let lineaEl = document.getElementById('linea-' + idAudio + '-' + i);
                 if (lineaEl) {
                     if (i === indexActivo) {
-                        lineaEl.style.color = "#ff4757"; // Color activo
-                        lineaEl.style.transform = "scale(1.05)";
+                        lineaEl.style.color = "#ff4757"; 
+                        lineaEl.style.transform = "scale(1.15)";
+                        
+                        // Auto-scroll para seguir la línea activa
+                        let posicionTop = lineaEl.offsetTop - contenedorLetras.offsetTop - (contenedorLetras.clientHeight / 2) + (lineaEl.clientHeight / 2);
+                        contenedorLetras.scrollTo({
+                            top: posicionTop,
+                            behavior: 'smooth'
+                        });
                     } else {
                         lineaEl.style.color = (idAudio === 'audio6' && traduccionActiva) ? "#333" : "#555";
                         lineaEl.style.transform = "scale(1)";
@@ -764,26 +766,30 @@
             return minutos + ":" + (segs < 10 ? "0" : "") + segs;
         }
 
+        // Lluvia de corazones mejorada (escalonada, en tandas y con 40 elementos)
         function crearLluviaCorazones() {
-            for (let i = 0; i < 20; i++) {
-                let corazon = document.createElement('div');
-                corazon.innerHTML = '💗';
-                corazon.style.position = 'fixed';
-                corazon.style.left = Math.random() * window.innerWidth + 'px';
-                corazon.style.top = '-20px';
-                corazon.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                corazon.style.zIndex = '1000';
-                corazon.style.transition = 'transform 3s linear, top 3s linear';
-                document.body.appendChild(corazon);
-
+            for (let i = 0; i < 40; i++) {
                 setTimeout(() => {
-                    corazon.style.top = window.innerHeight + 'px';
-                    corazon.style.transform = `rotate(${Math.random() * 360}deg)`;
-                }, 100);
+                    let corazon = document.createElement('div');
+                    corazon.innerHTML = '💗';
+                    corazon.style.position = 'fixed';
+                    corazon.style.left = Math.random() * window.innerWidth + 'px';
+                    corazon.style.top = '-30px';
+                    corazon.style.fontSize = (Math.random() * 20 + 12) + 'px';
+                    corazon.style.zIndex = '1000';
+                    corazon.style.pointerEvents = 'none';
+                    corazon.style.transition = 'transform 3.5s linear, top 3.5s linear';
+                    document.body.appendChild(corazon);
 
-                setTimeout(() => {
-                    corazon.remove();
-                }, 3000);
+                    setTimeout(() => {
+                        corazon.style.top = window.innerHeight + '50px';
+                        corazon.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    }, 50);
+
+                    setTimeout(() => {
+                        corazon.remove();
+                    }, 3600);
+                }, i * 90); // Retraso escalonado para que caigan de a pocos
             }
         }
     </script>
