@@ -256,6 +256,10 @@
                     <span>💌 I want to fall in love</span>
                     <span class="etiqueta-leida" id="etiqueta-carta-4">Nueva</span>
                 </button>
+                <button class="btn-carta-item" onclick="abrirCarta('carta5', 'etiqueta-carta-4')">
+                    <span>💌 I love you soooo much darling </span>
+                    <span class="etiqueta-leida" id="etiqueta-carta-5">Nueva</span>
+                </button>
             </div>
         </div>
 
@@ -288,6 +292,13 @@
             <p><strong>Fecha:</strong> Mañana</p>
             <hr style="border: 0; border-top: 1px solid #ffd1dc; margin: 10px 0;">
             <p>Amooooooooor si sabias que te amo muchisissimos muchos muchotes muchos? y que tambien estar contigo es lo mejor jskjskj y que me encanta abrazarte y tambien agarrarte de la mano simplemente te amoooo y gracias por todo💗.</p>
+        </div>
+        <div id="carta5" class="carta-estilo oculto">
+            <button class="btn-volver-buzon" onclick="cerrarCarta()">⬅ Volver al Buzón</button>
+            <h3>Holaaaaas jskajsk </h3>
+            <p><strong>Fecha:</strong>la tengo que poner yo? Buenos hoy puesss ns es 2 de octubre jskajks</p>
+            <hr style="border: 0; border-top: 1px solid #ffd1dc; margin: 10px 0;">
+            <p>Holaassssss mi vida 💖, el día de hoy es muuy especial jaksak por que ya llevamos 4 mesecitos juntos y espero sean muchos muchos mas los que pueda pasar a tu lado, tal vez no sea mucho pero como siempre quiero afradecerte por estar siempre conmigo aguantarme y amarme, tal vez no se muchas cosas pero algo que si se es que estos 4 meses contigo han sido los mejores, cada dia agradesco el tener a una novia tan increible como tú que ha estado para mi en las buenas y en las malas y que apesar de todo los problemas que tengo se queda conmigo y asi me ama, eyyyy me puse sentimental jakjakak si sigo asi voy a llorar sjakjsak 😓, gracias por estar siempre junto a mí te amo mi vida y mucho mas de lo que podria explicar con palabras ❤️‍🩹</p>
         </div>
     </div>
 
@@ -576,7 +587,7 @@
             document.getElementById('carta2').classList.add('oculto');
             document.getElementById('carta3').classList.add('oculto');
             document.getElementById('carta4').classList.add('oculto');
-            document.getElementById(idCarta).classList.remove('oculto');
+            document.getElementById('carta5').classList.remove('oculto');
 
             let numeroCarta = etiquetaId.replace('etiqueta-carta-', '');
             marcarComoLeido(`carta-${numeroCarta}`, 'badge-buzon', 4);
@@ -587,6 +598,7 @@
             document.getElementById('carta2').classList.add('oculto');
             document.getElementById('carta3').classList.add('oculto');
             document.getElementById('carta4').classList.add('oculto');
+            document.getElementById('carta5').classList.add('oculto');
             document.getElementById('buzon-lista').classList.remove('oculto');
         }
 
